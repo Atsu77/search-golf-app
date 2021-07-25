@@ -10,6 +10,7 @@ import format from "date-fns/format";
 // components
 import "./Common.css";
 import { Result } from "./Result";
+import { Loading } from "./Loading";
 
 // url
 import { golfCourses } from "../urls/index";
@@ -24,8 +25,9 @@ export const SearchBox = () => {
     departure: "1",
     duration: "90",
     plans: [],
-    planCount: 0,
+    planCount: null,
     error: null,
+    loading: false,
   };
 
   const [schedule, setSchedule] = useState(init);
@@ -33,6 +35,7 @@ export const SearchBox = () => {
   const onFormSubmit = async (e) => {
     try {
       e.preventDefault();
+      setSchedule({ ...schedule, loading: true });
       const res = await axios.get(golfCourses, {
         params: {
           date: format(schedule.date, "yyyyMMdd"),
@@ -46,6 +49,7 @@ export const SearchBox = () => {
         ...schedule,
         planCount: res.data.planCount,
         plans: res.data.plans,
+        loading: false,
       });
     } catch (e) {
       setSchedule({ ...schedule, error: e });
@@ -126,6 +130,7 @@ export const SearchBox = () => {
             </button>
           </div>
         </form>
+        <Loading loading={schedule.loading} />
         <Result
           plans={schedule.plans}
           planCount={schedule.planCount}
