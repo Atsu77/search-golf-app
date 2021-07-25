@@ -1,8 +1,16 @@
 import React from "react";
-import "./Common.css";
 import "semantic-ui-css/semantic.min.css";
+import DatePicker, { registerLocale } from "react-datepicker";
+import ja from "date-fns/locale/ja";
+import "react-datepicker/dist/react-datepicker.css";
+
+// components
+import "./Common.css";
 
 export const SearchBox = () => {
+  const Today = new Date();
+  registerLocale('ja', ja);
+
   return (
     <div className="ui container" id="container">
       <div className="Search__Form">
@@ -12,7 +20,12 @@ export const SearchBox = () => {
               <i className="calendar alternate outline icon"></i>
               プレー日
             </label>
-            <input type="date" />
+            <DatePicker
+              dateFormat="yyyy/MM/dd"
+              locale='ja'
+              selected={Today}
+              minDate={Today}
+            />
           </div>
           <div className="field">
             <label>
