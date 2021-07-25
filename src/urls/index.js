@@ -1,0 +1,1 @@
+export const golfCourses = 'https://l1kwik11ne.execute-api.ap-northeast-1.amazonaws.com/production/golf-courses'
